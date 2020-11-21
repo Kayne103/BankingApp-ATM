@@ -26,4 +26,9 @@ public class Account {
             JOptionPane.showMessageDialog(null,e.getMessage());
         }
     }
+
+    public static ResultSet getAccounts(Connection connection) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("select * from Account");
+        return statement.executeQuery();
+    }
 }

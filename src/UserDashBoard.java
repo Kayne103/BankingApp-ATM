@@ -20,6 +20,7 @@ public class UserDashBoard extends JFrame{
     private JPanel DepositPanel;
     private JPanel withDrawPanel;
     private JButton quitButton;
+    private JButton logoutButton;
 
     public UserDashBoard(Connection connection,int UserID) throws SQLException {
 
@@ -50,6 +51,13 @@ public class UserDashBoard extends JFrame{
                 } catch (SQLException throwable) {
                     throwable.printStackTrace();
                 }
+            }
+        });
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                new AtmGui(connection).setVisible(true);
+                dispose();
             }
         });
     }
