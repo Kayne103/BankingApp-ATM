@@ -1,4 +1,7 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -23,6 +26,12 @@ public class AtmGui extends JFrame{
     private JTextField adminUsernameTextField;
     private JButton closeButton;
     private JTextField accountNumberTextField;
+    private JPanel SearchPanel;
+    private JTable customerAccountsTable;
+    private JTextField searchTextField;
+    private JButton searchButton;
+    private JLabel customerIDLabel;
+    private JLabel yourAccountsLabel;
     private JPanel userRootPanel;
 
     public AtmGui(Connection connection) {
@@ -30,6 +39,7 @@ public class AtmGui extends JFrame{
         setTitle("Banking App");
         add(rootPanel);
         setResizable(false);
+ 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         /*Login as user*/
@@ -89,6 +99,22 @@ public class AtmGui extends JFrame{
                     throwable.printStackTrace();
                 }
 
+            }
+        });
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    if (searchTextField.getText().trim().isEmpty()){
+                        JOptionPane.showMessageDialog(null,"Field cannot be empty");
+                    }else if(Account.getMyAccounts(connection, Integer.parseInt(searchTextField.getText())).next() == false){
+                        JOptionPane.showMessageDialog(null,"You dont have any registered account");
+                    }else {
+                        customerAccountsTable.setModel(DbUtils.resultSetToTableModel(Account.getMyAccounts(connection, Integer.parseInt(searchTextField.getText()))));
+                    }
+                }catch (Exception e){
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                }
             }
         });
     }

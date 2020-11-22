@@ -14,13 +14,19 @@ public class UserDashBoard extends JFrame{
     private JLabel depositMoneyLabel;
     private JTextField depositAmountTextField1;
     private JButton depositButton;
-    private JLabel accountBalanceLabel;
     private JLabel amountLabel1;
     private JButton printStatementButton;
     private JPanel DepositPanel;
     private JPanel withDrawPanel;
     private JButton quitButton;
     private JButton logoutButton;
+    private JTextField oldPINTextField;
+    private JTextField newPINTextField;
+    private JButton changeButton;
+    private JPanel PINpanel;
+    private JLabel newPINLabel;
+    private JLabel oldPINLabel;
+    private JLabel changePINLabel;
 
     public UserDashBoard(Connection connection,int UserID) throws SQLException {
 
@@ -30,18 +36,27 @@ public class UserDashBoard extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //accountBalanceLabel.setText(Account.getAccountBalance(connection,UserID).getString("Account_Balance"));
+        //accountBalanceLabel.setText(String.valueOf(Account.getAccountBalance(connection,UserID)));
 
         confirmAndWithdrawButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (amountTextField.getText().trim().isEmpty()){
                     JOptionPane.showMessageDialog(null,"Please provide amount");
-                }else{
-
+                }else {
+                    try {
+                        if (Double.parseDouble(amountTextField.getText())>Account.getAccountBalance(connection,UserID)){
+                            JOptionPane.showMessageDialog(null,"Insufficient Balance\nCannot withdraw amount");
+                        }else {
+                            Account.withdrawCash(connection,UserID,Double.parseDouble(amountTextField.getText()));
+                        }
+                    } catch (SQLException throwable) {
+                        throwable.printStackTrace();
+                    }
                 }
             }
         });
+
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -53,11 +68,42 @@ public class UserDashBoard extends JFrame{
                 }
             }
         });
+
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 new AtmGui(connection).setVisible(true);
                 dispose();
+            }
+        });
+
+        depositButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (depositAmountTextField1.getText().trim().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Please provide amount");
+                }else if (Double.parseDouble(depositAmountTextField1.getText())<0){
+                    JOptionPane.showMessageDialog(null,"Please provide valid amount");
+                }else {
+                    Account.depositCash(connection,UserID,Double.parseDouble(depositAmountTextField1.getText()));
+                }
+            }
+        });
+
+        changeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    if (oldPINTextField.getText().trim().isEmpty() || newPINTextField.getText().trim().isEmpty()){
+                        JOptionPane.showMessageDialog(null,"Field cannot be empty");
+                    }else if (Customer.validateUserCredentials(connection,UserID,Integer.parseInt(oldPINTextField.getText()))){
+                        Account.changePIN(connection,UserID,Integer.parseInt(newPINTextField.getText()));
+                    }else{
+                        JOptionPane.showMessageDialog(null,"Provide correct password");
+                    }
+                }catch (Exception e){
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                }
             }
         });
     }

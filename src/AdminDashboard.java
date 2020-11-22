@@ -33,7 +33,7 @@ public class AdminDashboard extends JFrame{
         setTitle("Banking App: Admin");
         add(AdminDashboardPanel);
         setResizable(false);
-                        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         accountTypeComboBox.setModel(new DefaultComboBoxModel(typesOfAccounts)); // Populate combobox with types of accounts
         listOfCustomers.setModel(DbUtils.resultSetToTableModel(Customer.getCustomers(connection))); // Populate table with customers
