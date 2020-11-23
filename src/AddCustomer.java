@@ -1,7 +1,10 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class AddCustomer extends JFrame{
     private JPanel AddCustomerPanel;
@@ -16,7 +19,7 @@ public class AddCustomer extends JFrame{
     private JLabel lastnameLabel;
     private JLabel addressLabel;
 
-    public AddCustomer(Connection connection) {
+    public AddCustomer(Connection connection,JTable table) {
         setTitle("Register New Customer");
         setSize(310,340);
         setResizable(false);
@@ -41,6 +44,11 @@ public class AddCustomer extends JFrame{
                     JOptionPane.showMessageDialog(null,"Fields cannot be empty");
                 }else {
                     Customer.AddCustomer(connection,Integer.parseInt(customerIDTextField.getText()),firstnameTextField.getText(),lastnameTextField.getText(),addressTextField.getText());
+                    try {
+                        table.setModel(DbUtils.resultSetToTableModel(Customer.getCustomers(connection)));
+                    } catch (SQLException throwable) {
+                        throwable.printStackTrace();
+                    }
                     dispose();
                 }
             }

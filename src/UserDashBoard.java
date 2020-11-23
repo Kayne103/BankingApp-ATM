@@ -27,6 +27,7 @@ public class UserDashBoard extends JFrame{
     private JLabel newPINLabel;
     private JLabel oldPINLabel;
     private JLabel changePINLabel;
+    private JButton checkBalanceButton;
 
     public UserDashBoard(Connection connection,int UserID) throws SQLException {
 
@@ -103,6 +104,16 @@ public class UserDashBoard extends JFrame{
                     }
                 }catch (Exception e){
                     JOptionPane.showMessageDialog(null,e.getMessage());
+                }
+            }
+        });
+        checkBalanceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    JOptionPane.showMessageDialog(null,"Your balance is: P"+Account.getAccountBalance(connection,UserID));
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
                 }
             }
         });

@@ -10,8 +10,8 @@ public class Account {
             String query = "select * from Account where Account_Number = ?";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, accountID);
-            stmt.execute();
-            ResultSet resultSet = stmt.executeQuery(query);
+            //stmt.execute();
+            ResultSet resultSet = stmt.executeQuery();
             resultSet.beforeFirst();
             resultSet.next();
             Double balance = resultSet.getDouble(3);
@@ -33,7 +33,7 @@ public class Account {
     }
 
     public static ResultSet getAccounts(Connection connection) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select * from Account");
+        PreparedStatement statement = connection.prepareStatement("select Account_Number,Customer_ID,Account_Balance,Account_Type,Account_Status from Account");
         return statement.executeQuery();
     }
 
@@ -42,11 +42,16 @@ public class Account {
         String query = "select Account_Status from Account where Account_Number = ? limit 1";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1,accountNumber);
-        if (statement.executeQuery().getString(0).equalsIgnoreCase("locked")){
-            return true;
-        }else {
-            return false;
+        ResultSet resultSet = statement.executeQuery();
+        boolean locked = true;
+        while (resultSet.next()){
+            if (resultSet.getString("Account_Status").equalsIgnoreCase("locked")){
+                locked = true;
+            }else {
+                locked = false;
+            }
         }
+        return locked;
     }
 
     public static void withdrawCash(Connection connection,int accountNumber,double drawCash){
@@ -98,4 +103,30 @@ public class Account {
         return statement.executeQuery();
     }
 
+
+    public static void lockAccount(Connection connection,int accountNumber){
+        try {
+            String query = "update Account set Account_status = 'locked' where Account_Number = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,accountNumber);
+            statement.execute();
+            JOptionPane.showMessageDialog(null,accountNumber+" is locked");
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+
+    }
+
+    public static void unlockAccount(Connection connection,int accountNumber){
+        try {
+            String query = "update Account set Account_status = 'unlocked' where Account_Number = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,accountNumber);
+            statement.execute();
+            JOptionPane.showMessageDialog(null,accountNumber+" is unlocked");
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+
+    }
 }

@@ -38,6 +38,8 @@ public class AtmGui extends JFrame{
         setSize(600,300);
         setTitle("Banking App");
         add(rootPanel);
+        pack();
+        setLocationRelativeTo(null);
         setResizable(false);
  
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,6 +51,8 @@ public class AtmGui extends JFrame{
                 try {
                     if (accountNumberTextField.getText().trim().isEmpty()||PINTextField.getText().trim().isEmpty()){
                         JOptionPane.showMessageDialog(null,"Fields cannot be empty");
+                    }else if (Account.isAccountLocked(connection,Integer.parseInt(accountNumberTextField.getText()))){
+                        JOptionPane.showMessageDialog(null,"Account blocked\nContact admin to unblock");
                     }else {
                         if (Customer.validateUserCredentials(connection,Integer.parseInt(accountNumberTextField.getText()),Integer.parseInt(PINTextField.getText()))){
                             new UserDashBoard(connection,Integer.parseInt(accountNumberTextField.getText())).setVisible(true);
