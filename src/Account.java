@@ -129,4 +129,26 @@ public class Account {
         }
 
     }
+
+    public static String getAccountType(Connection connection, int accountID) throws SQLException {
+        String query = "select * from Account where Account_Number = ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setInt(1, accountID);
+        ResultSet resultSet = stmt.executeQuery();
+        resultSet.beforeFirst();
+        resultSet.next();
+        String accountType = resultSet.getString(5);
+        return accountType;
+    }
+
+    public static boolean isAccountWithdrawable(String accountType){
+        boolean isAccount;
+        if (accountType.equalsIgnoreCase("cheque")){
+            isAccount = true;
+        }else {
+            isAccount = false;
+        }
+
+        return isAccount;
+    }
 }

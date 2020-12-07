@@ -46,10 +46,14 @@ public class UserDashBoard extends JFrame{
                     JOptionPane.showMessageDialog(null,"Please provide amount");
                 }else {
                     try {
-                        if (Double.parseDouble(amountTextField.getText())>Account.getAccountBalance(connection,UserID)){
-                            JOptionPane.showMessageDialog(null,"Insufficient Balance\nCannot withdraw amount");
+                        if (Account.isAccountWithdrawable(Account.getAccountType(connection,UserID))){
+                            if (Double.parseDouble(amountTextField.getText())>Account.getAccountBalance(connection,UserID)){
+                                JOptionPane.showMessageDialog(null,"Insufficient Balance\nCannot withdraw amount");
+                            }else {
+                                Account.withdrawCash(connection,UserID,Double.parseDouble(amountTextField.getText()));
+                            }
                         }else {
-                            Account.withdrawCash(connection,UserID,Double.parseDouble(amountTextField.getText()));
+                            JOptionPane.showMessageDialog(null,"Cannot withdraw from a non-cheque account");
                         }
                     } catch (SQLException throwable) {
                         throwable.printStackTrace();
