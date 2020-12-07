@@ -35,6 +35,7 @@ public class UserDashBoard extends JFrame{
         setTitle("Banking App: User");
         add(userDashBoardPanel);
         setResizable(false);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //accountBalanceLabel.setText(String.valueOf(Account.getAccountBalance(connection,UserID)));

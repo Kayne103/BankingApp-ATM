@@ -38,6 +38,7 @@ public class AdminDashboard extends JFrame{
         setSize(800,500);
         setTitle("Banking App: Admin");
         add(AdminDashboardPanel);
+        setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
