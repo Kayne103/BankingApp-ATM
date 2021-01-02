@@ -35,13 +35,12 @@ public class AtmGui extends JFrame{
     private JPanel userRootPanel;
 
     public AtmGui(Connection connection) {
-        setSize(600,300);
+        setSize(800,400);
         setTitle("Banking App");
         add(rootPanel);
         pack();
         setLocationRelativeTo(null);
         setResizable(false);
- 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         /*Login as user*/
