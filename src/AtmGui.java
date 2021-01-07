@@ -38,7 +38,6 @@ public class AtmGui extends JFrame{
         setSize(800,400);
         setTitle("Banking App");
         add(rootPanel);
-        pack();
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,6 +46,7 @@ public class AtmGui extends JFrame{
         enterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                int loginAttempt = 0;
                 try {
                     if (accountNumberTextField.getText().trim().isEmpty()||PINTextField.getText().trim().isEmpty()){
                         JOptionPane.showMessageDialog(null,"Fields cannot be empty");
@@ -58,6 +58,11 @@ public class AtmGui extends JFrame{
                             dispose();
                         }else{
                             JOptionPane.showMessageDialog(null,"Wrong details");
+                            if(loginAttempt==3){
+                                Account.lockAccount(connection,Integer.parseInt(accountNumberTextField.getText()));
+                            }else {
+                                loginAttempt++;
+                            }
                         }
                     }
                 }catch (Exception exception){

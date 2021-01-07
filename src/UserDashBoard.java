@@ -31,7 +31,7 @@ public class UserDashBoard extends JFrame{
 
     public UserDashBoard(Connection connection,int UserID) throws SQLException {
 
-        setSize(600,300);
+        setSize(800,500);
         setTitle("Banking App: User");
         add(userDashBoardPanel);
         setResizable(false);
