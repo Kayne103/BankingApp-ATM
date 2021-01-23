@@ -78,8 +78,13 @@ public class UserDashBoard extends JFrame{
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                new AtmGui(connection).setVisible(true);
-                dispose();
+                try {
+                    new AtmGui(connection).setVisible(true);
+                    dispose();
+                } catch (UnsupportedLookAndFeelException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 

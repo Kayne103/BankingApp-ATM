@@ -12,13 +12,11 @@ import java.util.ArrayList;
 
 public class AdminDashboard extends JFrame{
     private JPanel AdminDashboardPanel;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane adminMainTabbedPane;
     private JPanel adminCustomerPanel;
     private JPanel adminAccountsPanel;
     private JTable listOfCustomers;
     private JButton newCustomerButton;
-    private JLabel createCustomerAccountsLabel;
-    private JLabel customersLabel;
     private JButton createAccountButton;
     private JTextField customerIDTextField;
     private JLabel customerIDLabel;
@@ -61,8 +59,13 @@ public class AdminDashboard extends JFrame{
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                new AtmGui(connection).setVisible(true);
-                dispose();
+                try {
+                    new AtmGui(connection).setVisible(true);
+                    dispose();
+                } catch (UnsupportedLookAndFeelException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
         quitButton.addActionListener(new ActionListener() {

@@ -23,6 +23,7 @@ public class AddCustomer extends JFrame{
         setTitle("Register New Customer");
         setSize(310,340);
         setResizable(false);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(AddCustomerPanel);
 

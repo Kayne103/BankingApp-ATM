@@ -31,10 +31,9 @@ public class AtmGui extends JFrame{
     private JTextField searchTextField;
     private JButton searchButton;
     private JLabel customerIDLabel;
-    private JLabel yourAccountsLabel;
     private JPanel userRootPanel;
 
-    public AtmGui(Connection connection) {
+    public AtmGui(Connection connection) throws UnsupportedLookAndFeelException {
         setSize(800,400);
         setTitle("Banking App");
         add(rootPanel);
@@ -126,4 +125,5 @@ public class AtmGui extends JFrame{
             }
         });
     }
+
 }
