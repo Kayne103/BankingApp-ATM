@@ -6,16 +6,12 @@ import java.sql.SQLException;
 
 public class UserDashBoard extends JFrame{
     private JPanel userDashBoardPanel;
-    private JLabel balanceLabel;
     private JTextField amountTextField;
     private JButton confirmAndWithdrawButton;
-    private JLabel withdrawMoneyLabel;
     private JLabel amountLabel;
-    private JLabel depositMoneyLabel;
     private JTextField depositAmountTextField1;
     private JButton depositButton;
     private JLabel amountLabel1;
-    private JButton printStatementButton;
     private JPanel DepositPanel;
     private JPanel withDrawPanel;
     private JButton quitButton;
@@ -26,8 +22,8 @@ public class UserDashBoard extends JFrame{
     private JPanel PINpanel;
     private JLabel newPINLabel;
     private JLabel oldPINLabel;
-    private JLabel changePINLabel;
     private JButton checkBalanceButton;
+    private JTabbedPane userDashboardJTabbedPane;
 
     public UserDashBoard(Connection connection,int UserID) throws SQLException {
 

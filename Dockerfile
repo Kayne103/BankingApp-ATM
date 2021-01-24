@@ -1,4 +1,4 @@
 FROM openjdk:8
-COPY ./out/production/ATM/ /tmp
+COPY ./out/artifacts/ATM_jar/ATM.jar /tmp
 WORKDIR /tmp
-ENTRYPOINT ["java","App"]
+ENTRYPOINT ["java -jar","ATM.jar"]
