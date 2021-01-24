@@ -1,3 +1,5 @@
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +12,9 @@ public class App {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost/BankingApp",DatabaseInfo.UserName,DatabaseInfo.Password);
-
+            FlatDarkLaf.install();
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+            JFrame.setDefaultLookAndFeelDecorated(true);
             new AtmGui(connection).setVisible(true);
 
         } catch (Exception e) {

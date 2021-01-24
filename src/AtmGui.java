@@ -1,3 +1,5 @@
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
@@ -34,6 +36,7 @@ public class AtmGui extends JFrame{
     private JPanel userRootPanel;
 
     public AtmGui(Connection connection) throws UnsupportedLookAndFeelException {
+
         setSize(800,400);
         setTitle("Banking App");
         add(rootPanel);
